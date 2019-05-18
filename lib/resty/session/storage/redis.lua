@@ -55,7 +55,7 @@ function redis.new(config)
         }
     }
     local s = r.socket or defaults.socket
-    if s then
+    if s and s ~= "" then
         self.socket = s
     else
         self.host = r.host or defaults.host
@@ -72,7 +72,7 @@ function redis:connect()
     else
         ok, err = r:connect(self.host, self.port)
     end
-    if ok and self.auth then
+    if ok and self.auth and self.auth ~= "" then
         ok, err = r:get_reused_times()
         if ok == 0 then
             ok, err = r:auth(self.auth)
